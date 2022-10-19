@@ -22,7 +22,7 @@ export default class LugaresController
 
     private async nuevoLugar(req: Request, res: Response): Promise<void>
     {
-
+        
     }
 
     private async consultaLugarId(req: Request, res: Response): Promise<void>

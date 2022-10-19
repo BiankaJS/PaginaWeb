@@ -29,4 +29,7 @@ export default class Usuario
 
     @Column({ type: "datetime", nullable: false})
     public fechaCreacion: Date;
+
+    @Column({type: 'datetime', nullable: false})
+    public fechaActualizacion: Date;
 }
