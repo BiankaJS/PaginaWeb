@@ -14,7 +14,7 @@ export default class DatabaseConnection{
                 port: 3306,
                 username: 'root',
                 password: 'root',
-                database: 'car_shop',
+                database: 'xtasis',
                 synchronize: true,
                 entities: [usuario, auto]
 
