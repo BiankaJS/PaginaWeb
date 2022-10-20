@@ -1,4 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, Repository, QueryFailedError } from 'typeorm';
+import { setFlagsFromString } from 'v8';
 import DatabaseConnection from '../../database/DatabaseConnetion';
 
 @Entity({ name: 'lugar' })
@@ -13,7 +14,7 @@ export default class Lugares
     @Column({ type: "varchar", length: 150, nullable: false})
     public descripcion: string;
 
-    @Column({ type: "varchar", length: 30, nullable: false})
+    @Column({ type: "varchar", length: 100, nullable: false})
     public direccion: string;
 
     @Column({ type: "varchar", length: 12})
@@ -22,10 +23,10 @@ export default class Lugares
     @Column({ type: 'datetime', nullable: false })
     public fechaCreacion: Date;
 
-    @Column({ type: 'datetime', nullable: false })
+    @Column({ type: 'datetime', nullable: true })
     public fechaActualizacion: Date;
     
-    @Column({ type: 'datetime', nullable: false })
+    @Column({ type: 'int', nullable: false })
     public codigoEstado: boolean;
     
     private constructor(
@@ -33,13 +34,12 @@ export default class Lugares
         descripcion: string,
         direccion: string,
         telefono: string,
-        fechaCreacion: Date
     ) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.direccion = direccion;
         this.telefono = telefono;
-        this.fechaCreacion = fechaCreacion;
+        this.codigoEstado = true;
     }
 
     public async actualizar(
@@ -67,20 +67,27 @@ export default class Lugares
         }
     }
 
-    public static async eliminar(id: number): Promise<void> {
-        const repositorioUsuarios = await Lugares.obtenerRepositorioLugares();
-        await repositorioUsuarios.delete(id);
+    public static async inactivarLugar(Id: number): Promise<void> {
+        const repositorioLugar = await Lugares.obtenerRepositorioLugares();
+        const lugar = await repositorioLugar.findOneBy({ Id });
+        if (!lugar) {
+            throw new Error('ErrorLugarNoEncontrado');
+        } else {
+            if(lugar.codigoEstado == true) lugar.codigoEstado = false;
+            else throw new Error('El lugar no se encuentra disponible')
+            await repositorioLugar.save(lugar);
+        }
     }
 
     public static async consultaLugares(): Promise<Lugares[]> {
-        const repositorioUsuarios = await Lugares.obtenerRepositorioLugares();
-        return repositorioUsuarios.find();
+        const repositorioLugar = await Lugares.obtenerRepositorioLugares();
+        return repositorioLugar.findBy({codigoEstado: true});
     }
 
     public static async consultaLugarId(Id: number): Promise<Lugares> {
-        const repositorioUsuarios = await Lugares.obtenerRepositorioLugares();
+        const repositorioLugar = await Lugares.obtenerRepositorioLugares();
 
-        const lugar = await repositorioUsuarios.findOneBy({ Id });
+        const lugar = await repositorioLugar.findOneBy({ Id });
 
         if (!lugar) {
             throw new Error('ErrorAutoNoEncontrado');
@@ -95,23 +102,20 @@ export default class Lugares
         nombre: string,
         descripcion: string,
         direccion: string,
-        telefono: string 
-
+        telefono: string, 
     ): Promise<Lugares> {
-        const repositorioUsuarios = await Lugares.obtenerRepositorioLugares();
-
-        const fechaCreacion = new Date();
-        const lugar = new Lugares(
+        const repositorioLugar = await Lugares.obtenerRepositorioLugares();
+        var lugar = new Lugares(
             nombre,
             descripcion,
             direccion,
-            telefono,
-            fechaCreacion
-
+            telefono
         );
+        lugar.fechaCreacion = new Date;
+        lugar.codigoEstado = true;
 
         try {
-            await repositorioUsuarios.save(lugar);
+            await repositorioLugar.save(lugar);
         } catch (e) {
             if (e instanceof QueryFailedError && e.message.includes('ER_DUP_ENTRY')) {
                 throw new Error('ErrorModeloDuplicado');
