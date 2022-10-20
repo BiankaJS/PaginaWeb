@@ -2,11 +2,17 @@ import { Application, Request, Response, Router } from 'express';
 import Usuario from '../models/entities/Usuario';
 import Sesion from '../models/Sesion';
 import DatabaseConnection from '../database/DatabaseConnetion';
+import HttpStatusCodes from 'http-status-codes';
 
 interface RegistroRequestBody{
-    usuario:string;
-    password:string;
-    nombreCompleto:string;
+    nombre: string,
+    apellidoMaterno: string,
+    apellidoPaterno: string,
+    fechaNacimiento: Date,
+    correo: string,
+    usuario: string,
+    password: string,
+    telefono: string,
 }
 
 interface LoginRequestBody
@@ -32,22 +38,19 @@ export default class AuthController{
     private async registro(req: Request, res: Response): Promise<void>
     {
         try {
-            const {usuario,password,nombreCompleto} = <RegistroRequestBody>req.body;
+            const {nombre, apellidoPaterno, apellidoMaterno,
+                fechaNacimiento, correo, usuario, password, telefono} = <RegistroRequestBody> req.body;
 
-            if(!usuario || !password || !nombreCompleto){
-                res.status(400).end();
+            if(!nombre || !apellidoPaterno || !apellidoMaterno|| !fechaNacimiento
+                || !correo || !usuario || !password || !telefono){
+                res.status(HttpStatusCodes.BAD_REQUEST).end();
                 return;
             }
         const repositorioUsuarios = await DatabaseConnection.getRepository(Usuario);
-        const nuevoUsuario = new Usuario();
-        nuevoUsuario.usuario = usuario;
-        nuevoUsuario.password = password;
-        nuevoUsuario.nombre = nombreCompleto;
-        nuevoUsuario.fechaCreacion = new Date;
-        nuevoUsuario.fechaActualizacion = new Date;
+        const nuevoUsuario = await Usuario.nuevoUsuario(nombre, apellidoMaterno, apellidoPaterno, fechaNacimiento
+            , correo, usuario, password, telefono);
 
-        const sesion = Sesion.crearParaUsuario(nuevoUsuario);
-        await repositorioUsuarios.save(nuevoUsuario);
+        const sesion = await Sesion.crearParaUsuario(nuevoUsuario);
 
         res.status(200).json(sesion);
         } catch (error) {
@@ -61,7 +64,7 @@ export default class AuthController{
         try {
             const{username, password} = <LoginRequestBody> req.body;
             if(!username || !password){
-                res.status(400).end();
+                res.status(HttpStatusCodes.BAD_REQUEST).end();
                 return;
             }
         const repositorioUsuario = await DatabaseConnection.getRepository(Usuario);

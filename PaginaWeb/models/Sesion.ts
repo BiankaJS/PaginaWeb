@@ -13,16 +13,16 @@ export default class Sesion{
 
     public static crearParaUsuario(usuario: Usuario):Sesion{
         const data={
-            Idusuario:usuario.Id,
-            nombre:usuario.nombre,
-            apellido:usuario.apellido,
+            nombre: usuario.nombre,
+            apellidoPaterno: usuario.apellidoPaterno,
+            apellidoMaterno: usuario.apellidoPaterno,
             fechaNacimiento:usuario.fechaNacimiento,
-            correo:usuario.correo,
-            usuario:usuario.password,
-            password:usuario.password,
-            telefono:usuario.telefono,
-            fechaCreacion:usuario.fechaCreacion,
-            fechaActualizacion:usuario.fechaActualizacion
+            correo: usuario.correo,
+            usuario: usuario.password,
+            password: usuario.password,
+            telefono: usuario.telefono,
+            fechaCreacion: usuario.fechaCreacion,
+            fechaActualizacion: usuario.fechaActualizacion
 
         }
     
