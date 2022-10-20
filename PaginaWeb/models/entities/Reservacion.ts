@@ -1,7 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, Repository, QueryFailedError, Timestamp, ManyToOne, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, Repository, QueryFailedError, Timestamp, ManyToOne, OneToOne, JoinColumn, OneToMany } from 'typeorm';
 import Lugares from './Lugar';
 
-@Entity({ name: 'Reservacion' })
+@Entity({ name: 'reservacion' })
 export default class Reservacion
 {
     @PrimaryGeneratedColumn({ type: 'mediumint', unsigned: true})
@@ -19,18 +19,17 @@ export default class Reservacion
     @Column({ type: "varchar", length: 30})
     public evento: string;
 
-    @Column({ type: "int", length: 30})
+    @Column({ type: "int"})
     public numPersonas: number;
 
-    @Column({ type: 'datetime', nullable: false })
+    @Column({ type: 'date', nullable: false })
     public fechaEvento: Date;
 
     @Column({ type: 'time', nullable: false })
-    public horaEvento: Timestamp;
+    public horaEvento: string;
 
-    @OneToOne(() => Lugares)
-    @JoinColumn()
-    lugarId: Lugares
+    @ManyToOne(() => Lugares)
+    lugar: Lugares
 
     @Column({ type: "varchar", nullable: true})
     public mensaje: string;

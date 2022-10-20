@@ -89,7 +89,7 @@ export default class Lugares
         const lugar = await repositorioLugar.findOneBy({ Id });
 
         if (!lugar) {
-            throw new Error('ErrorAutoNoEncontrado');
+            throw new Error('ErrorLugarNoEncontrado');
         }
 
         return lugar;

@@ -1,8 +1,7 @@
 import { Application, Router, Request, Response} from "express";
-import Lugar from '../models/entities/Lugar';
 import HttpStatusCodes from 'http-status-codes';
 import DatabaseConnection from "../database/DatabaseConnetion";
-import { Timestamp } from "typeorm";
+import Lugares from "../models/entities/Lugar";
 import Reservacion from "../models/entities/Reservacion";
 
 interface registrarReservacion {
@@ -12,8 +11,9 @@ interface registrarReservacion {
     evento:string;
     numPersonas: number;
     fechaEvento: Date;
-    horaEvento: Timestamp;
+    horaEvento: string;
     lugarId: number;
+    mensaje: string;
 }
 
 export default class ReservacionController{
@@ -32,11 +32,6 @@ export default class ReservacionController{
 
         this.router.post('/', this.nuevaReservacion);
         this.router.post('/:id', this.confirmarReservacion);
-    }
-
-    public static mount(app: Application): ReservacionController
-    {
-        return new ReservacionController(app);
     }
     //Complete
     public async confirmarReservacion(req: Request, res: Response): Promise<void>
@@ -59,15 +54,20 @@ export default class ReservacionController{
     {
         try
         {
-            const{nombreCompleto, correo, telefono, evento, numPersonas, fechaEvento, horaEvento } = <registrarReservacion> req.body;
+            const{nombreCompleto, correo, telefono, evento, numPersonas, fechaEvento, horaEvento, lugarId, mensaje} = <registrarReservacion> req.body;
 
-            if(!nombreCompleto || !correo || !telefono || !evento || !numPersonas || !fechaEvento || !horaEvento)
+            if(!nombreCompleto || !correo || !telefono || !evento || !numPersonas 
+                || !fechaEvento || !horaEvento || !lugarId ||!mensaje)
             {
                 res.status(400).end();
                 return;
             }
 
             const repository = await DatabaseConnection.getRepository(Reservacion);
+            const repositoryLugar = await DatabaseConnection.getRepository(Lugares);
+
+            const lugar = await Lugares.consultaLugarId(lugarId);
+
             const reservacion = new Reservacion();
             reservacion.nombreCompleto = nombreCompleto;
             reservacion.correo = correo;
@@ -76,6 +76,9 @@ export default class ReservacionController{
             reservacion.numPersonas = numPersonas;
             reservacion.fechaEvento = fechaEvento;
             reservacion.horaEvento = horaEvento;
+            reservacion.lugar = lugar;
+            reservacion.mensaje = mensaje;
+            reservacion.codigoEstado = true;
             
             await repository.save(reservacion);
             res.status(200).end();
@@ -85,6 +88,11 @@ export default class ReservacionController{
             console.log(e);
             res.status(500).json(e);
         }
+    }
+
+    public static mount (app: Application): ReservacionController
+    {
+        return new ReservacionController(app);
     }
 }
 
