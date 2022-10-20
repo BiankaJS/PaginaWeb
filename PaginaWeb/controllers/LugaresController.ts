@@ -138,9 +138,9 @@ export default class LugaresController
         try {
             const id = parseInt(req.params.id);
 
-            const lugares = await Lugar.eliminar(id);
+            await Lugar.inactivarLugar(id);
     
-            res.status(HttpStatusCodes.OK).json(lugares);
+            res.status(HttpStatusCodes.OK).json({ message: "Lugar eliminado"});
         } catch (e) {
             console.error(e);
             res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).end();
