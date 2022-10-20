@@ -1,38 +1,48 @@
-import { DataSource, ObjectLiteral, EntityTarget, Repository} from "typeorm";
-import Usuario from "../models/entities/Usuario";
-import Lugares from "../models/entities/Lugar";
+import { DataSource, ObjectLiteral, EntityTarget, Repository } from 'typeorm';
+import Auto from '../models/entities/Lugar';
+import Usuario from '../models/entities/Usuario';
 
-export default class DatabaseConnection
-{
-    private static dataSource?: DataSource;
+export default class DatabaseConnection {
+    private dataSource: DataSource;
 
-    public static async getConnectionInstance(): Promise<DataSource>
-    {
-        if(!DatabaseConnection.dataSource)
-        {
-            DatabaseConnection.dataSource = new DataSource({
-                type: 'mysql',
-                host: '127.0.0.1',
-                port: 3306,
-                username: 'root',
-                password: '12345admin',
-                database: 'car_shop',
-                synchronize: true,
-                entities: [Usuario, Lugares]
-            })
-        }
+    private static instance: DatabaseConnection;
 
-        if(!DatabaseConnection.dataSource.isInitialized)
-        {
-            await DatabaseConnection.dataSource.initialize();
-        }
-
-        return DatabaseConnection.dataSource
+    private constructor() {
+        this.dataSource = new DataSource({
+            type: 'mysql',
+            host: '127.0.0.1',
+            port: 3306,
+            username: 'root',
+            password: 'root',
+            database: 'xtasis',
+            synchronize: true,
+            entities: [Usuario, Auto]
+        });
     }
 
-    public static async getRepository<Entity extends ObjectLiteral>(entityTarget: EntityTarget<Entity>) : Promise<Repository<Entity>>
-    {
-        const connection = await DatabaseConnection.getConnectionInstance();
-        return connection.getRepository(entityTarget);
+    private get isConnected(): boolean {
+        return this.dataSource.isInitialized;
+    }
+
+    public getRepository<Entity extends ObjectLiteral>(
+        entityTarget: EntityTarget<Entity>
+    ): Repository<Entity> {
+        return this.dataSource.getRepository(entityTarget);
+    }
+
+    private async connect(): Promise<void> {
+        await this.dataSource.initialize();
+    }
+
+    public static async getConnectedInstance(): Promise<DatabaseConnection> {
+        if (!DatabaseConnection.instance) {
+            DatabaseConnection.instance = new DatabaseConnection();
+        }
+
+        if (!DatabaseConnection.instance.isConnected) {
+            await DatabaseConnection.instance.connect();
+        }
+
+        return DatabaseConnection.instance;
     }
 }
