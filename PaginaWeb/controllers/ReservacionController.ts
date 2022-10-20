@@ -13,6 +13,7 @@ interface registrarReservacion {
     numPersonas: number;
     fechaEvento: Date;
     horaEvento: Timestamp;
+    lugarId: number;
 }
 
 export default class ReservacionController{
@@ -29,8 +30,8 @@ export default class ReservacionController{
     protected initializeRouter(): void
     {
 
-        this.router.get('/', this.nuevaReservacion);
-        this.router.post('/', this.confirmarReservacion);
+        this.router.post('/', this.nuevaReservacion);
+        this.router.post('/:id', this.confirmarReservacion);
     }
 
     public static mount(app: Application): ReservacionController
