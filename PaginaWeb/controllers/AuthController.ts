@@ -18,16 +18,15 @@ interface LoginRequestBody
 export default class AuthController{
     private router: Router;
 
-    private constructor(app: Application)
-    {
+    private constructor(app: Application){
         this.router = Router();
         this.initializeRoutes();
         app.use('/auth', this.router);
     }
 
     private initializeRoutes(): void {
-        this.router.post('/login', this.login);
         this.router.post('/registro', this.registro);
+        this.router.post('/login', this.login);
     }
 
     private async registro(req: Request, res: Response): Promise<void>
@@ -43,6 +42,7 @@ export default class AuthController{
         const nuevoUsuario = new Usuario();
         nuevoUsuario.usuario = usuario;
         nuevoUsuario.password = password;
+        nuevoUsuario.nombre = nombreCompleto;
         nuevoUsuario.fechaCreacion = new Date;
         nuevoUsuario.fechaActualizacion = new Date;
 
