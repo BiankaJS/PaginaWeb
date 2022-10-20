@@ -1,6 +1,5 @@
 import { Application, Router, Request, Response} from "express";
 import Lugar from '../models/entities/Lugar';
-
 import HttpStatusCodes from 'http-status-codes';
 
 interface RegistrarActualizarRequestBody {

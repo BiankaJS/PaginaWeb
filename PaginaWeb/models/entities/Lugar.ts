@@ -1,5 +1,4 @@
 import { Entity, PrimaryGeneratedColumn, Column, Repository, QueryFailedError } from 'typeorm';
-import { setFlagsFromString } from 'v8';
 import DatabaseConnection from '../../database/DatabaseConnetion';
 
 @Entity({ name: 'lugar' })
