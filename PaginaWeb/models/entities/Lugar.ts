@@ -86,7 +86,7 @@ export default class Lugares
     public static async consultaLugarId(Id: number): Promise<Lugares> {
         const repositorioLugar = await Lugares.obtenerRepositorioLugares();
 
-        const lugar = await repositorioLugar.findOneBy({ Id });
+        const lugar = await repositorioLugar.findOneBy({ Id, codigoEstado: true});
 
         if (!lugar) {
             throw new Error('ErrorLugarNoEncontrado');

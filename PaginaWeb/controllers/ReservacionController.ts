@@ -31,22 +31,22 @@ export default class ReservacionController{
     {
 
         this.router.post('/', this.nuevaReservacion);
-        this.router.post('/:id', this.confirmarReservacion);
+        this.router.get('/', this.consultaReservacion);
     }
     //Complete
-    public async confirmarReservacion(req: Request, res: Response): Promise<void>
+    public async consultaReservacion(req: Request, res: Response): Promise<void>
     {
         try
         {
             const repository = await DatabaseConnection.getRepository(Reservacion);
             const reservacion: Reservacion[] = await repository.findBy({ codigoEstado: true });
 
-            res.status(200).json(reservacion);
+            res.status(HttpStatusCodes.OK).json(reservacion);
         }
         catch(e)
         {
             console.error(e);
-            res.status(500).end();
+            res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).end();
         }
     }
     //Complete
@@ -59,7 +59,7 @@ export default class ReservacionController{
             if(!nombreCompleto || !correo || !telefono || !evento || !numPersonas 
                 || !fechaEvento || !horaEvento || !lugarId ||!mensaje)
             {
-                res.status(400).end();
+                res.status(HttpStatusCodes.BAD_REQUEST).json({message: "Faltan datos"});
                 return;
             }
 
@@ -81,12 +81,12 @@ export default class ReservacionController{
             reservacion.codigoEstado = true;
             
             await repository.save(reservacion);
-            res.status(200).end();
+            res.status(HttpStatusCodes.OK).json({message: "Registro Existoso"});
         }
         catch(e)
         {
             console.log(e);
-            res.status(500).json(e);
+            res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json(e);
         }
     }
 

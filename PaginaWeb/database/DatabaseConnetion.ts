@@ -14,7 +14,7 @@ export default class DatabaseConnection{
                 host: '127.0.0.1',
                 port: 3306,
                 username: 'root',
-                password: 'root',
+                password: '12345admin',
                 database: 'xtasis',
                 synchronize: true,
                 entities: [usuario, lugar, reservacion]
