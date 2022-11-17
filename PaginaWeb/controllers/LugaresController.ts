@@ -82,7 +82,7 @@ export default class LugaresController
 
             res.status(HttpStatusCodes.OK).json(lugar);
         } catch (e) {
-            if (e instanceof Error && e.message === 'ErrorAutoNoEncontrado') {
+            if (e instanceof Error && e.message === 'ErrorLugarNoEncontrado') {
                 res.status(HttpStatusCodes.NOT_FOUND).end();
                 return;
             }

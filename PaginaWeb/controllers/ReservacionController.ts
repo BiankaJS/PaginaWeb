@@ -64,7 +64,6 @@ export default class ReservacionController{
             }
 
             const repository = await DatabaseConnection.getRepository(Reservacion);
-            const repositoryLugar = await DatabaseConnection.getRepository(Lugares);
 
             const lugar = await Lugares.consultaLugarId(lugarId);
 
