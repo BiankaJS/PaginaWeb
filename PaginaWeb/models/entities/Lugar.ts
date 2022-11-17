@@ -1,5 +1,4 @@
 import { Entity, PrimaryGeneratedColumn, Column, Repository, QueryFailedError } from 'typeorm';
-import { setFlagsFromString } from 'v8';
 import DatabaseConnection from '../../database/DatabaseConnetion';
 
 @Entity({ name: 'lugar' })
@@ -17,7 +16,7 @@ export default class Lugares
     @Column({ type: "varchar", length: 100, nullable: false})
     public direccion: string;
 
-    @Column({ type: "varchar", length: 12})
+    @Column({ type: "varchar", length: 20})
     public telefono: string;
 
     @Column({ type: 'datetime', nullable: false })
@@ -87,10 +86,10 @@ export default class Lugares
     public static async consultaLugarId(Id: number): Promise<Lugares> {
         const repositorioLugar = await Lugares.obtenerRepositorioLugares();
 
-        const lugar = await repositorioLugar.findOneBy({ Id });
+        const lugar = await repositorioLugar.findOneBy({ Id, codigoEstado: true});
 
         if (!lugar) {
-            throw new Error('ErrorAutoNoEncontrado');
+            throw new Error('ErrorLugarNoEncontrado');
         }
 
         return lugar;
