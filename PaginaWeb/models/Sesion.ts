@@ -13,6 +13,7 @@ export default class Sesion{
 
     public static crearParaUsuario(usuario: Usuario):Sesion{
         const data={
+            Id: usuario.Id,
             nombre: usuario.nombre,
             apellidoPaterno: usuario.apellidoPaterno,
             apellidoMaterno: usuario.apellidoPaterno,
@@ -30,16 +31,6 @@ export default class Sesion{
     
         return new Sesion(tokenSesion);
     }
-
-    // public static tokenUsuario(usuario: Usuario): Sesion{
-    //     const data = {
-    //         usuario: usuario.usuario,
-    //         password: usuario.password
-    //     }
-    //     const token = jwt.sign({ data }, Sesion.secret, { expiresIn: '1d'});
-    //     return new Sesion(token);
-    // }
-
     public static verificarTokenSesion(
         req:Request,
         res:Response,

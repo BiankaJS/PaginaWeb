@@ -1,6 +1,5 @@
 import { Application, Router, Request, Response} from "express";
 import Lugar from '../models/entities/Lugar';
-
 import HttpStatusCodes from 'http-status-codes';
 
 interface RegistrarActualizarRequestBody {
@@ -61,10 +60,10 @@ export default class LugaresController
                 direccion,
                 telefono);
     
-            res.status(HttpStatusCodes.OK).json(nuevoLugar);
+            res.status(HttpStatusCodes.OK).json({message: "Registro Exitoso"});
         } catch (e) {
             if (e instanceof Error && e.message === 'ErrorModeloDuplicado') {
-                res.status(HttpStatusCodes.CONFLICT).json({ mensaje: 'Ya existe un auto con el mismo modelo.' });
+                res.status(HttpStatusCodes.CONFLICT).json({ mensaje: 'Ya existe un lugar con los mismos datos.' });
                 return;
             }
 
@@ -83,7 +82,7 @@ export default class LugaresController
 
             res.status(HttpStatusCodes.OK).json(lugar);
         } catch (e) {
-            if (e instanceof Error && e.message === 'ErrorAutoNoEncontrado') {
+            if (e instanceof Error && e.message === 'ErrorLugarNoEncontrado') {
                 res.status(HttpStatusCodes.NOT_FOUND).end();
                 return;
             }

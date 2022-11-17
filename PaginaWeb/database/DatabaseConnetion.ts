@@ -1,5 +1,6 @@
 import { DataSource, ObjectLiteral, EntityTarget, Repository } from "typeorm";
-import auto from "../models/entities/Lugar";
+import lugar from "../models/entities/Lugar";
+import reservacion from "../models/entities/Reservacion";
 import usuario from "../models/entities/Usuario";
 
 
@@ -13,10 +14,10 @@ export default class DatabaseConnection{
                 host: '127.0.0.1',
                 port: 3306,
                 username: 'root',
-                password: 'root',
+                password: '12345admin',
                 database: 'xtasis',
                 synchronize: true,
-                entities: [usuario, auto]
+                entities: [usuario, lugar, reservacion]
 
             });
         }
