@@ -7,6 +7,9 @@ export default class Usuario
     @PrimaryGeneratedColumn({ type: 'mediumint', unsigned: true})
     public Id: number;
 
+    @Column({ type: "bit"})
+    public RolMaster: boolean;
+
     @Column({ type: "varchar", length: 50, nullable: false})
     public nombre: string;
 
@@ -41,6 +44,7 @@ export default class Usuario
     public fechaActualizacion: Date;
 
     private constructor(
+        rolMaster: boolean,
         nombre: string,
         apellidoMaterno: string,
         apellidoPaterno: string,
@@ -50,6 +54,7 @@ export default class Usuario
         password: string,
         telefono: string,
     ){
+        this.RolMaster = rolMaster,
         this.nombre = nombre,
         this.apellidoPaterno = apellidoPaterno,
         this.apellidoMaterno = apellidoMaterno,
@@ -63,6 +68,7 @@ export default class Usuario
     }
 
     public static async nuevoUsuario(
+        rolMaster: boolean,
         nombre: string,
         apellidoMaterno: string,
         apellidoPaterno: string,
@@ -74,7 +80,7 @@ export default class Usuario
     ): Promise<Usuario>{
         const repositorioUsuario = await Usuario.obtenerRepositorioUsuario();
         const newUsuario = new Usuario(
-            nombre, apellidoMaterno, apellidoPaterno, fechaNacimiento, 
+            rolMaster, nombre, apellidoMaterno, apellidoPaterno, fechaNacimiento, 
             correo, usuario, password, telefono
         );
         try

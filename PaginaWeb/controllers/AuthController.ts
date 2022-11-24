@@ -5,6 +5,7 @@ import DatabaseConnection from '../database/DatabaseConnetion';
 import HttpStatusCodes from 'http-status-codes';
 
 interface RegistroRequestBody{
+    rolMaster: boolean,
     nombre: string,
     apellidoMaterno: string,
     apellidoPaterno: string,
@@ -38,7 +39,7 @@ export default class AuthController{
     private async registro(req: Request, res: Response): Promise<void>
     {
         try {
-            const {nombre, apellidoPaterno, apellidoMaterno,
+            const {rolMaster, nombre, apellidoPaterno, apellidoMaterno,
                 fechaNacimiento, correo, usuario, password, telefono} = <RegistroRequestBody> req.body;
 
             if(!nombre || !apellidoPaterno || !apellidoMaterno|| !fechaNacimiento
@@ -47,7 +48,7 @@ export default class AuthController{
                 return;
             }
         const repositorioUsuarios = await DatabaseConnection.getRepository(Usuario);
-        const nuevoUsuario = await Usuario.nuevoUsuario(nombre, apellidoMaterno, apellidoPaterno, fechaNacimiento
+        const nuevoUsuario = await Usuario.nuevoUsuario( rolMaster, nombre, apellidoMaterno, apellidoPaterno, fechaNacimiento
             , correo, usuario, password, telefono);
 
         const sesion = await Sesion.crearParaUsuario(nuevoUsuario);
