@@ -57,7 +57,7 @@ export default class LugaresController
                 return;
             }
     
-            const nuevoLugar = await Lugar.nuevoLugar(nombre,
+            await Lugar.nuevoLugar(nombre,
                 descripcion,
                 direccion,
                 telefono, 

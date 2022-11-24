@@ -1,4 +1,3 @@
-import { type } from 'os';
 import { Entity, PrimaryGeneratedColumn, Column, Repository, QueryFailedError } from 'typeorm';
 import DatabaseConnection from '../../database/DatabaseConnetion';
 
