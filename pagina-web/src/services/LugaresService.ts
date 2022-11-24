@@ -26,7 +26,6 @@ export default class LugaresService{
                     lugar.id, lugar.nombre, lugar.descripcion, lugar.direccion, lugar.telefono, lugar.imagen)
             ));
             return listLugar;
-            console.log(listLugar);
         } catch (e) {
             if(e instanceof AxiosError && e.response) {
                 switch(e.response.status) {
