@@ -7,6 +7,7 @@ interface RegistrarActualizarRequestBody {
     descripcion: string;
     direccion: string;
     telefono: string;
+    imagen: string;
 }
 export default class LugaresController
 {
@@ -47,18 +48,20 @@ export default class LugaresController
                 nombre,
                 descripcion,
                 direccion,
-                telefono
+                telefono,
+                imagen
             } = <RegistrarActualizarRequestBody>req.body;
 
-            if (!nombre || !descripcion || !direccion || !telefono) {
+            if (!nombre || !descripcion || !direccion || !telefono || !imagen) {
                 res.status(HttpStatusCodes.BAD_REQUEST).end();
                 return;
             }
     
-            const nuevoLugar = await Lugar.nuevoLugar(nombre,
+            await Lugar.nuevoLugar(nombre,
                 descripcion,
                 direccion,
-                telefono);
+                telefono, 
+                imagen);
     
             res.status(HttpStatusCodes.OK).json({message: "Registro Exitoso"});
         } catch (e) {

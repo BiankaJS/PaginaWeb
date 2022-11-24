@@ -16,6 +16,9 @@ export default class Lugares
     @Column({ type: "varchar", length: 100, nullable: false})
     public direccion: string;
 
+    @Column({ type: "varchar", length: 30, nullable: false})
+    public imagen: string;
+
     @Column({ type: "varchar", length: 20})
     public telefono: string;
 
@@ -33,12 +36,14 @@ export default class Lugares
         descripcion: string,
         direccion: string,
         telefono: string,
+        imagen: string
     ) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.direccion = direccion;
         this.telefono = telefono;
         this.codigoEstado = true;
+        this.imagen = imagen;
     }
 
     public async actualizar(
@@ -102,13 +107,15 @@ export default class Lugares
         descripcion: string,
         direccion: string,
         telefono: string, 
+        imagen: string
     ): Promise<Lugares> {
         const repositorioLugar = await Lugares.obtenerRepositorioLugares();
         var lugar = new Lugares(
             nombre,
             descripcion,
             direccion,
-            telefono
+            telefono,
+            imagen
         );
         lugar.fechaCreacion = new Date;
         lugar.codigoEstado = true;

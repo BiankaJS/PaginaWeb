@@ -14,6 +14,7 @@ export default class Sesion{
     public static crearParaUsuario(usuario: Usuario):Sesion{
         const data={
             Id: usuario.Id,
+            RolMaster: usuario.RolMaster,
             nombre: usuario.nombre,
             apellidoPaterno: usuario.apellidoPaterno,
             apellidoMaterno: usuario.apellidoPaterno,
