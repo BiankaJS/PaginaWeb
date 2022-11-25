@@ -2,7 +2,7 @@ import axios, { AxiosError} from "axios";
 import Lugar from "../models/Lugar";
 
 interface LugarBackend{
-    id: number;
+    Id: number;
     nombre: string;
     descripcion: string;
     direccion: string;
@@ -23,7 +23,7 @@ export default class LugaresService{
             const respuesta = await axios.get(this.baseUrl);
             const listLugar = respuesta.data.map((lugar: LugarBackend) => (
                 new Lugar(
-                    lugar.id, lugar.nombre, lugar.descripcion, lugar.direccion, lugar.telefono, lugar.imagen)
+                    lugar.Id, lugar.nombre, lugar.descripcion, lugar.direccion, lugar.telefono, lugar.imagen)
             ));
             return listLugar;
         } catch (e) {
