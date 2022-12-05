@@ -14,7 +14,7 @@ export default function CardLugar( {lugar} : CardLugarProps) {
                     <Card.Body>
                         <Card.Title>{lugar.nombre}</Card.Title>
                         <Card.Text>{lugar.descripcion}</Card.Text>
-                        <Button variant="primary">Reservar</Button>
+                        <Button className="btnLugar" variant="primary" href="/reservacion">Reservar</Button>
                     </Card.Body>
                 </Card>
             </Col>

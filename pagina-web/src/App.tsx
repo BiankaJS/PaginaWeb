@@ -1,12 +1,13 @@
 import {createBrowserRouter, RouterProvider, Navigate} from 'react-router-dom';
 import CardsLugares from './components/CardsLugares';
 import FormularioReservacion from './components/FormularioReservacion';
-import FormularioUsuario from './components/FormularioUsuario';
 import Home from './components/routes/Home';
 import Index from './components/routes/Index';
 import Lugares from './components/routes/Lugares';
 import Reservacion from './components/routes/Reservacion';
 import Usuario from './components/routes/Usuario';
+import FormularioRegistro from './components/FormularioRegistro';
+import FormularioLogin from './components/FormularioLogin';
 
 const router = createBrowserRouter([
   {
@@ -53,7 +54,7 @@ const router = createBrowserRouter([
       {
         path: '/auth',
         index: true,
-        element: <FormularioUsuario/>
+        element: <FormularioLogin/>
       }
     ]
   }

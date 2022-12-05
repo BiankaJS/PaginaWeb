@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container, Row, Spinner } from "react-bootstrap";
+import { Alert, Container, Row } from "react-bootstrap";
 import Lugar from "../models/Lugar";
 import LugaresService from "../services/LugaresService";
 import CardLugar from "./CardLugar";
@@ -28,7 +28,7 @@ export default function CardsLugares() {
         }
     });
 
-    if (!isLoaded) return <><Spinner animation="grow" variant="info" /></>
+    if (!isLoaded) return <><Container><Alert variant="warning">No hay lugares disponibles!</Alert></Container></>
 
     return (
         <>
@@ -36,7 +36,7 @@ export default function CardsLugares() {
                 <Row xs={1} md={2} className="g-2">
                     {
                         lugares.map((lugar) => (
-                            <CardLugar key={lugar.id} lugar={lugar} />
+                            <CardLugar key={lugar.id} lugar={lugar}/>
                         ))
                     }
                 </Row>

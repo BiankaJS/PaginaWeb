@@ -47,7 +47,7 @@ export default class AuthController{
                 res.status(HttpStatusCodes.BAD_REQUEST).end();
                 return;
             }
-        const repositorioUsuarios = await DatabaseConnection.getRepository(Usuario);
+        await DatabaseConnection.getRepository(Usuario);
         const nuevoUsuario = await Usuario.nuevoUsuario( rolMaster, nombre, apellidoMaterno, apellidoPaterno, fechaNacimiento
             , correo, usuario, password, telefono);
 
