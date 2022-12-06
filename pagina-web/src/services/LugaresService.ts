@@ -12,10 +12,22 @@ interface LugarBackend{
 
 export default class LugaresService{
     private baseUrl: string;
+    private tokenSesion: string;
 
     public constructor()
     {
-        this.baseUrl = 'http://localhost:3001/lugares'
+        this.baseUrl = 'http://localhost:3001/lugares';
+        const tokenSesion = localStorage.getItem('tokenSesion');
+        if (!tokenSesion) {
+            throw new Error('ErrorSesionExpiradaOInvalida');
+        }
+        this.tokenSesion = tokenSesion;
+    }
+
+    private get headers() {
+        return {
+            'Token-Sesion': this.tokenSesion
+        };
     }
 
     public async obtenerLugares(): Promise<Lugar[]> {
@@ -35,6 +47,112 @@ export default class LugaresService{
                         throw e;
                 }
             }
+            throw e;
+        }
+    }
+
+    public async registrarLugar(lugar: Lugar): Promise<void> {
+
+        try {
+            const respuesta = await axios.post(
+                this.baseUrl,
+                lugar,
+                { headers: this.headers }
+            );
+            const {
+                nombre,
+                descripcion,
+                direccion,
+                telefono,
+                imagen
+            } =  respuesta.data as LugarBackend;
+
+        } catch (e) {
+            if (e instanceof AxiosError && e.response) {
+                switch (e.response.status) {
+                    case 400: // Bad Request
+                        throw new Error('ErrorFormularioIncompleto');
+                    case 401: // Unauthorized
+                        throw new Error('ErrorSesionExpiradaOInvalida');
+                    case 409: // Conflict
+                        throw new Error('ErrorLugarExistente');
+                    default:
+                        throw e;
+                }
+            }
+            throw e;
+        }
+    }
+
+    public async obtenerPorId(id: number): Promise<Lugar> {
+        try {
+            const respuesta = await axios.get(
+                `${this.baseUrl}/${id}`,
+                { headers: this.headers }
+            );
+    
+            const {
+                nombre,
+                descripcion,
+                direccion,
+                telefono,
+                imagen
+            } = respuesta.data as LugarBackend;
+    
+            return new Lugar(
+                id,
+                nombre,
+                descripcion,
+                direccion,
+                telefono,
+                imagen,
+            );
+        } catch (e) {
+            if (e instanceof AxiosError && e.response) {
+                switch (e.response.status) {
+                    case 401:
+                        throw new Error('ErrorSesionExpiradaOInvalida');
+                    case 404:
+                        throw new Error('ErrorLugarNoEncontrado');
+                    default:
+                        throw e;
+                }
+            }
+
+            throw e;
+        }
+    }
+
+    public async actualizarLugar(lugar: Lugar): Promise<void> {
+        try {
+            await axios.put(
+                `${this.baseUrl}/${lugar.id}`,
+                lugar,
+                { headers: this.headers }
+            );
+        } catch (e) {
+            if (e instanceof AxiosError && e.response) {
+                switch (e.response.status) {
+                    case 401:
+                        throw new Error('ErrorSesionExpiradaOInvalida');
+                    case 409:
+                        throw new Error('ErrorReservacionExistente')
+                    default:
+                        throw e;
+                }
+            }
+            throw e;
+        }
+    }
+
+    //Eliminar Lugar
+    public async eliminarLugar(id: number): Promise<void> {
+        try {
+            const respuesta = await axios.delete(
+                `${this.baseUrl}/${id}`,
+                { headers: this.headers }
+            );
+        } catch (e) {
             throw e;
         }
     }
