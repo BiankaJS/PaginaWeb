@@ -1,7 +1,42 @@
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { Button, Container, Form } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import LoginUsuarioTask from '../tasks/LoginUsuarioTask';
 import './scss/RegistroLogin.scss';
 
 export default function FormularioLogin() {
+
+    const [ usuario, setUsuario] =  useState('');
+    const [ password, setPassword] = useState('');
+
+    const navigate = useNavigate();
+
+    function handleFormControlChange(event: ChangeEvent<HTMLInputElement>)
+    {
+        const valor = event.target.value;
+
+        switch(event.target.name)
+        {
+            case 'txtUsuario':
+                setUsuario(valor);
+                break;
+            case 'txtPassword':
+                setPassword(valor);
+                break;
+        }
+    }
+
+    async function handleFormSubmit(event: FormEvent) {
+        event.preventDefault();
+        try {
+            const loginUsuarioTask = new LoginUsuarioTask({usuario, password});
+            await loginUsuarioTask.execute();
+            navigate('/');
+        } catch (e) {
+            
+        }
+    }
+
     return(
         <>
             <Container>
@@ -10,12 +45,12 @@ export default function FormularioLogin() {
                         <div className='formulario'>
                             <h2 className='title'>BIENVENIDO!</h2>
                             <p className='paragraph'>Inicia sesion para continuar!</p>
-                            <Form>
+                            <Form onSubmit={handleFormSubmit}>
                                 <Form.Group>
-                                    <Form.Control type='email' placeholder='Correo' className='inputStyle' required/>
+                                    <Form.Control type='text' placeholder='Usuario' className='inputStyle' name='txtUsuario' value={usuario} onChange={handleFormControlChange} required/>
                                 </Form.Group>
                                 <Form.Group>
-                                    <Form.Control type='password' placeholder='Contraseña' className='inputStyle'/>
+                                    <Form.Control type='password' placeholder='Contraseña' className='inputStyle' name='txtPassword' value={password} onChange={handleFormControlChange} required/>
                                 </Form.Group>
                                 <p>
                                     <Button type='submit' className='btnSubmit'>Iniciar Sesion</Button>
@@ -34,7 +69,7 @@ export default function FormularioLogin() {
                                     <li>Guardar lugares en favoritos</li>
                                 </ul>
                             </p>
-                            <Button className='btnSubmit' href='#FormularioUsuario'>Registrarme</Button>
+                            <Button className='btnSubmit' href='/auth/'>Registrarme</Button>
                             <Button className='btnSubmit' href='/Reservacion'>Reservar lugar</Button>
                         </div>
                     </section>

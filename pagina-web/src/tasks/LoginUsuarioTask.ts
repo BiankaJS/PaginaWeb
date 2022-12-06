@@ -1,7 +1,7 @@
 import AuthenticationService from "../services/AuthenticationService";
 
 interface DtoLoginUsuario {
-    correo: string;
+    usuario: string;
     password: string;
 }
 
@@ -20,15 +20,15 @@ export default class LoginUsuarioTask {
     }
 
     private validarDtoFormulario(): void {
-        const { correo, password } = this._dtoLoginUsuario;
-        if(!correo || !password) throw new Error('ErrorFormularioIncompleto')
+        const { usuario, password } = this._dtoLoginUsuario;
+        if(!usuario || !password) throw new Error('ErrorFormularioIncompleto')
     }
 
     private async loginUsuario(): Promise<string> {
         const servicioAuthentication = new AuthenticationService();
-        const { correo, password } = this._dtoLoginUsuario;
+        const { usuario, password } = this._dtoLoginUsuario;
         return servicioAuthentication.loginUsuario( {
-            correo, password
+            usuario, password
         });
     }
 }

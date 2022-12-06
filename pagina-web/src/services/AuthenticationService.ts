@@ -1,16 +1,19 @@
 import axios, { AxiosError } from 'axios';
 
 interface RegistroDto{
-    nombre: string;
-    apellidos: string;
-    fechaNacimiento: Date;
-    correo: string;
-    telefono: string;
-    password: string;
+    rolMaster: boolean,
+    nombre: string,
+    apellidoMaterno: string,
+    apellidoPaterno: string,
+    fechaNacimiento: Date,
+    correo: string,
+    usuario: string,
+    password: string,
+    telefono: string,
 }
 
 interface LoginDto{
-    correo: string,
+    usuario: string,
     password: string
 }
 

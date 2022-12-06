@@ -10,6 +10,12 @@
 .linkRedes:hover{
     background-color: #fff;
 }
+.linkRedireccion{
+    color: rgb(66, 255, 176);
+}
+.linkRedireccion:hover{
+    color: black;
+}
 .sizeImage{
         width: 80%;
         height: 80%;
@@ -71,12 +77,13 @@
     max-width: 500px;
     outline: none;
     border: solid transparent;
+    background-color: black;
     padding: 1em;
     font: inherit;
     border-radius: .6em;
 }
 .main__input:hover{
-    background-color: black;
+    background-color: #652ec7;
     border-color: transparent;
 }
 .main__input--send{

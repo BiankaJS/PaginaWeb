@@ -1,12 +1,14 @@
 import { Button, Form } from "react-bootstrap";
 import './scss/style.scss';
 import './scss/reservacion.scss';
-import { ChangeEvent, FormEvent, useState} from 'react';
+import { ChangeEvent, FormEvent, useState, useEffect} from 'react';
 import Reservacion from "../models/Reservacion";
 import RegistrarReservacionTask from "../tasks/RegistrarReservacionTask";
 import { useNavigate } from 'react-router-dom';
 import Lugar from "../models/Lugar";
 import LugaresService from "../services/LugaresService";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSquarePlus } from "@fortawesome/free-regular-svg-icons";
 
 export default function FormularioReservacion() {
     const [lugares, setLugares] = useState<Lugar[]>([]);
@@ -20,7 +22,10 @@ export default function FormularioReservacion() {
     const [horaEvento, setHoraEvento] = useState('');
     const [lugar, setLugar] = useState(0);
     const [mensaje, setMensaje] = useState('');
+
     const navigate = useNavigate();
+
+    const[ isLoaded, setIsLoaded ] = useState(false);
 
     async function cargarLugares() {
         const servicioLugar = new LugaresService();
@@ -31,7 +36,6 @@ export default function FormularioReservacion() {
     function handleFormControlChange(
         event: ChangeEvent<HTMLInputElement>
     ) {
-        cargarLugares();
         const valor = event.target.value;
 
         switch (event.target.name) {
@@ -117,6 +121,13 @@ export default function FormularioReservacion() {
         }
     }
 
+    useEffect(() => {
+        if(!isLoaded)
+        {
+            cargarLugares();
+        }
+    });
+
     return (
         <>
             <div>
@@ -169,7 +180,7 @@ export default function FormularioReservacion() {
                                 <Form.Control size="sm" as="textarea" type="text" rows={3} name="mensaje" id="txtMensaje" value={mensaje} onChange={handleFormControlChange} />
                             </Form.Group>
                             <p>
-                                <Button type="submit">Reservar</Button>
+                                <Button type="submit"><FontAwesomeIcon icon={faSquarePlus}/> Reservar</Button>
                             </p>
                         </Form>
                     </div>

@@ -8,6 +8,7 @@ import Reservacion from './components/routes/Reservacion';
 import Usuario from './components/routes/Usuario';
 import FormularioRegistro from './components/FormularioRegistro';
 import FormularioLogin from './components/FormularioLogin';
+import Favoritos from './components/Favoritos';
 
 const router = createBrowserRouter([
   {
@@ -54,7 +55,15 @@ const router = createBrowserRouter([
       {
         path: '/auth',
         index: true,
+        element: <FormularioRegistro/>
+      },
+      {
+        path: '/auth/login',
         element: <FormularioLogin/>
+      },
+      {
+        path: '/auth/favorite',
+        element: <Favoritos/>
       }
     ]
   }

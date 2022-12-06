@@ -7,7 +7,7 @@ export default class Sesion{
     public tokenSesion: string;
     private static readonly secret = 'Les mamites hot';
 
-    private constructor(tokenSesion: string){
+    private constructor(tokenSesion: string, rolUsuario: boolean, usuarioId: number){
         this.tokenSesion = tokenSesion;
     }
 
@@ -20,7 +20,6 @@ export default class Sesion{
             apellidoMaterno: usuario.apellidoPaterno,
             fechaNacimiento:usuario.fechaNacimiento,
             correo: usuario.correo,
-            usuario: usuario.password,
             password: usuario.password,
             telefono: usuario.telefono,
             fechaCreacion: usuario.fechaCreacion,
@@ -30,7 +29,7 @@ export default class Sesion{
     
         const tokenSesion = jwt.sign({data}, Sesion.secret, {expiresIn: '1d'});
     
-        return new Sesion(tokenSesion);
+        return new Sesion(tokenSesion, data.RolMaster, data.Id);
     }
     public static verificarTokenSesion(
         req:Request,

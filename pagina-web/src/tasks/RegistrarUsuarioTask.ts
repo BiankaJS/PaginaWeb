@@ -1,12 +1,14 @@
 import AuthenticationServices from '../services/AuthenticationService';
 interface DtoFormularioRegirstoUsuario {
-    nombre: string;
-    apellidos: string;
-    fechaNacimiento: Date;
-    correo: string;
-    telefono: string;
-    password: string;
-    verificarPassword: string;
+    nombre: string,
+    apellidoMaterno: string,
+    apellidoPaterno: string,
+    fechaN: string,
+    correo: string,
+    usuario: string,
+    password: string,
+    telefono: string,
+    verifyPassword: string;
 }
 
 export default class RegistroUsuarioTask {
@@ -26,13 +28,13 @@ export default class RegistroUsuarioTask {
     }
 
     private validarDtoFormulario(): void {
-        const { nombre, apellidos, fechaNacimiento, correo, telefono, password, verificarPassword} = this._dtoFormularioRegistroUsuario;
+        const { nombre, apellidoPaterno, apellidoMaterno, fechaN, correo, usuario, password, telefono, verifyPassword} = this._dtoFormularioRegistroUsuario;
 
-        if(!nombre || !apellidos || !fechaNacimiento || !correo || !telefono || !password || !verificarPassword) {
+        if(!nombre || !apellidoPaterno || !apellidoMaterno || !fechaN || !correo || !usuario || !password || !telefono || !verifyPassword) {
             throw new Error('ErrorFormularioIncompleto');
         }
 
-        if(password !== verificarPassword)
+        if(password !== verifyPassword)
         {
             throw new Error('ErrorPasswordNoCoinciden');
         }
@@ -40,9 +42,11 @@ export default class RegistroUsuarioTask {
 
     private async registrarUsuario(): Promise<string> {
         const servicioAuthentication = new AuthenticationServices();
-        const { nombre, apellidos, fechaNacimiento, correo, telefono, password} = this._dtoFormularioRegistroUsuario;
+        const rolMaster = false;
+        const { nombre, apellidoPaterno, apellidoMaterno, fechaN, correo, usuario, password, telefono} = this._dtoFormularioRegistroUsuario;
+        const fechaNacimiento = new Date(fechaN);
         return servicioAuthentication.registroUsuario( {
-            nombre, apellidos, fechaNacimiento, correo, telefono, password
+            rolMaster, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, correo, usuario, password, telefono
         });
     }
 }
