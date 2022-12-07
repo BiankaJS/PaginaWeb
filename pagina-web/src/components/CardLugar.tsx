@@ -1,12 +1,22 @@
 import { Button, Card, Col, Row } from "react-bootstrap";
 import Lugar from "../models/Lugar";
-import America from "../img/Americas.jpg";
+import { useNavigate } from "react-router-dom";
+import { isDisabled } from "@testing-library/user-event/dist/utils";
+import { useState } from "react";
 
 interface CardLugarProps{
     lugar: Lugar
 }
 
 export default function CardLugar( {lugar} : CardLugarProps) {
+
+    const navigate = useNavigate();
+
+    function navegarADetalleLugar() {
+        navigate(`/lugares/${lugar.id}`);
+    }
+
+
     return(
         <>
             <Col>
@@ -17,6 +27,9 @@ export default function CardLugar( {lugar} : CardLugarProps) {
                         <Card.Text>{lugar.descripcion}</Card.Text>
                         <Button className="btnLugar" variant="primary" href="/reservacion">Reservar</Button>
                     </Card.Body>
+                    <Card.Footer>
+                        <Button className="" variant="primary" name="txtBtnModificar" onClick={navegarADetalleLugar}>Modificar</Button>
+                    </Card.Footer>
                 </Card>
             </Col>
         </>

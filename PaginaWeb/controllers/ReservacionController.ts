@@ -39,7 +39,6 @@ export default class ReservacionController{
         {
             const repository = await DatabaseConnection.getRepository(Reservacion);
             const reservacion: Reservacion[] = await repository.findBy({ codigoEstado: true });
-            console.log(reservacion);
 
             res.status(HttpStatusCodes.OK).json(reservacion);
         }

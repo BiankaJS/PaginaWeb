@@ -5,6 +5,8 @@ import { useState, useEffect } from 'react';
 import { Row, Col, Card } from 'react-bootstrap';
 import Lugar from "../../models/Lugar";
 import LugaresService from "../../services/LugaresService";
+import { toast } from "react-toastify";
+import CardsLugares from "../CardsLugares";
 
 export default function DetalleLugar() {
     const { idLugar } = useParams();
@@ -45,23 +47,23 @@ export default function DetalleLugar() {
 
 
     if (!lugar) {
-        return (
-            <>
-                <h3>Error 404: Lugar no encontrado.</h3>
-            </>
+        toast(
+            'No se encontro el lugar.',
+            { type: 'warning' }
         );
+        return(
+            <>
+                <CardsLugares/>
+            </>
+        )
     }
 
     return (
         <>
             <Row>
                 <Col md={{ span: 6, offset: 3 }}>
-                    <Card>
                     <Link to="/lugares">&lt; Regresar</Link>
-                        <Card.Body>
-                            <FormularioActualizarLugar lugar={lugar} />
-                        </Card.Body>
-                    </Card>
+                    <FormularioActualizarLugar lugar={lugar} />
                 </Col>
             </Row>
         </>
