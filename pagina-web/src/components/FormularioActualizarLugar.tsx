@@ -1,4 +1,4 @@
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Modal } from "react-bootstrap";
 import { ChangeEvent, FormEvent, useState } from 'react';
 import Lugar from "../models/Lugar";
 import { useNavigate } from 'react-router-dom';
@@ -18,6 +18,10 @@ export default function FormularioActualizarLugar({ lugar }: FormularioActualiza
     const [imagen, setImagen] = useState(lugar.imagen);
     const id = lugar.id;
     const navigate = useNavigate();
+
+    const [show, setShow] = useState(false);
+    const handleClose = () =>  setShow(false);
+    const handleShow = () => setShow(true);
 
     async function handleFormActualizar(event: FormEvent) {
         event.preventDefault();
@@ -85,12 +89,24 @@ export default function FormularioActualizarLugar({ lugar }: FormularioActualiza
                             <Form.Label htmlFor="txtEmail">Descripcion: </Form.Label>
                             <Form.Control size="sm" as="textarea" type="text" rows={3} name="descripcion" id="txtMensaje" value={descripcion} onChange={handleFormControlChange} required/>
                         </Form.Group>
-                        <p>
-                            <Button onClick={handleFormActualizar} variant="primary" type="submit">
+                    </Form>
+                    <p>
+                            <Button onClick={handleShow} variant="primary" type="submit" className="dialog-form">
                                 Actualizar
                             </Button>
+                            <Modal show={show} onHide={handleClose}>
+                                <Modal.Header closeButton>
+                                    <Modal.Title>Actualizar lugar</Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body>¿Desea actualizar este lugar? </Modal.Body>
+                                <Modal.Footer>
+                                    <Button variant="secondary" onClick={handleClose}>
+                                        Cancelar
+                                    </Button>
+                                    <Button variant="primary" name="txtAceptar" onClick={handleFormActualizar}>Actualizar</Button>
+                                </Modal.Footer>
+                            </Modal>
                         </p>
-                    </Form>
                 </div>
             </div>
         </>

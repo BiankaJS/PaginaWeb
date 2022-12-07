@@ -31,6 +31,7 @@ export default class ReservacionController{
     {
         this.router.post('/', this.nuevaReservacion);
         this.router.get('/', this.consultaReservacion);
+        this.router.delete('/:id', this.inactivarReservacion);
     }
     //Complete
     public async consultaReservacion(req: Request, res: Response): Promise<void>
@@ -87,6 +88,30 @@ export default class ReservacionController{
         {
             console.log(e);
             res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json(e);
+        }
+    }
+
+    public async inactivarReservacion(req: Request, res: Response): Promise<void>
+    {
+        try {
+            const Id = parseInt(req.params.id);
+
+            const repository = await DatabaseConnection.getRepository(Reservacion);
+
+            const reservacion = await repository.findOneBy({Id});
+
+            if (!reservacion) {
+                throw new Error('ErrorLugarNoEncontrado');
+            } else {
+                if(reservacion.codigoEstado == true) reservacion.codigoEstado = false;
+                else throw new Error('El lugar no se encuentra disponible')
+                await repository.save(reservacion);
+            }
+    
+            res.status(HttpStatusCodes.OK).json({ message: "Reservacion eliminado"});
+        } catch (e) {
+            console.error(e);
+            res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).end();
         }
     }
 

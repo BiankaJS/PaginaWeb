@@ -1,7 +1,6 @@
 import { Button, Card, Col, Row } from "react-bootstrap";
 import Lugar from "../models/Lugar";
 import { useNavigate } from "react-router-dom";
-import { isDisabled } from "@testing-library/user-event/dist/utils";
 import { useState } from "react";
 
 interface CardLugarProps{

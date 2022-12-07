@@ -132,9 +132,8 @@ export default class ReservacionesService {
     //Eliminar Reservaciones
     public async eliminarReservacion(id: number): Promise<void>{
         try {
-            const respuesta = await axios.delete(
-                `${this.baseUrl}/${id}`,
-                { headers: this.headers }
+            await axios.delete(
+                `${this.baseUrl}/${id}`
             );
 
         } catch (e){

@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, Repository, QueryFailedError, Timestamp, ManyToOne, OneToOne, JoinColumn, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, Repository, ManyToOne} from 'typeorm';
+import DatabaseConnection from '../../database/DatabaseConnetion';
 import Lugares from './Lugar';
 
 @Entity({ name: 'reservacion' })
@@ -42,5 +43,4 @@ export default class Reservacion
     
     @Column({ type: 'int', nullable: false })
     public codigoEstado: boolean;
-
 }

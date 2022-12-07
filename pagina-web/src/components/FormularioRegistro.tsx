@@ -3,7 +3,7 @@ import './scss/RegistroUsuario.scss';
 import facebook from '../img/facebook.svg';
 import apple from '../img/apple.svg';
 import google from '../img/google-icon.svg';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import RegistroUsuarioTask from '../tasks/RegistrarUsuarioTask';
 import { toast } from 'react-toastify';
@@ -20,6 +20,7 @@ export default function FormularioRegistro() {
     const [ password, setPassword] = useState('');
     const [ verifyPassword, setVerifyPass] = useState('');
 
+    const [isLoaded, setIsLoaded] = useState(false);
     const navigate = useNavigate();
 
     function handleFormControlChange(event: ChangeEvent<HTMLInputElement>)
@@ -97,6 +98,22 @@ export default function FormularioRegistro() {
             }
         }
     }
+
+    function LoadPage(){
+        const tokenSesion = localStorage.getItem('tokenSession');
+        if(tokenSesion)
+        {
+            setIsLoaded(true);
+            navigate('/reservacion');
+        }
+    }
+
+    useEffect(() => {
+        if(!isLoaded)
+        {
+            LoadPage()
+        }
+    })
 
     return(
         <>

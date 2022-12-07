@@ -134,7 +134,7 @@ export default class LugaresService{
     //Eliminar Lugar
     public async eliminarLugar(id: number): Promise<void> {
         try {
-            const respuesta = await axios.delete(
+            await axios.delete(
                 `${this.baseUrl}/${id}`
             );
         } catch (e) {

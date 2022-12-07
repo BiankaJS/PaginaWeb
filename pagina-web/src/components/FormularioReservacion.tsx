@@ -7,6 +7,7 @@ import Lugar from "../models/Lugar";
 import LugaresService from "../services/LugaresService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquarePlus } from "@fortawesome/free-regular-svg-icons";
+import { toast } from "react-toastify";
 
 export default function FormularioReservacion() {
     const [lugares, setLugares] = useState<Lugar[]>([]);
@@ -69,7 +70,15 @@ export default function FormularioReservacion() {
     }
 
     function handleSelectControlChange(event: ChangeEvent<HTMLSelectElement>){
+        const valor = event.target.value;
+        setLugarId(parseInt(valor));
+    }
 
+    const notify = () =>{
+        toast(
+            'Registro Exitoso',
+            { type: 'success'}
+        );
     }
 
     async function handleFormSubmit(event: FormEvent) {
@@ -87,6 +96,7 @@ export default function FormularioReservacion() {
                 fechaEvento,
                 lugarId });
             await registrarReservacionTask.execute();
+            notify()
             navigate('/index');
         } catch (e) {
             switch ((e as Error).message) {

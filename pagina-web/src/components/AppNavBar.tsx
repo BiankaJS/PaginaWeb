@@ -4,10 +4,17 @@ import Corazon from '../img/corazon.png';
 import Perfil from '../img/perfil.png';
 import './scss/style.scss';
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export default function AppNavBar() {
 
-    const tokenSesion = localStorage.getItem('tokenSession');
+    const [tokenSesion, settokenSesion] = useState(localStorage.getItem('tokenSession'));
+
+    function cerrarSesion()
+    {
+        localStorage.removeItem('tokenSession');
+        window.location.reload();
+    }
 
     return (
         <>
@@ -40,6 +47,15 @@ export default function AppNavBar() {
                                 <img src={Perfil} />
                             </Nav.Link>
                         </Nav.Item>
+                        {
+                            tokenSesion ? (
+                                <Nav.Item>
+                                <Nav.Link className="logoItem" onClick={cerrarSesion}>Cerrar Sesion</Nav.Link>
+                            </Nav.Item>  
+                            ):(
+                                <></>
+                            )
+                        }
                     </Nav>
                 </Container>
             </Navbar>
