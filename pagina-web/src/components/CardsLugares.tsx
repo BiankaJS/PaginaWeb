@@ -16,8 +16,14 @@ export default function CardsLugares() {
             setLugares(listaLugares);
             setIsLoaded(true);
         } catch (e) {
-            if (e instanceof Error && e.message === 'NoSeEncontraronLugares') {
-                window.alert('No hay lugares')
+            switch((e as Error).message)
+            {
+                case 'NoSeEncontraronLugares':
+                    window.alert('No hay lugares');
+                    break;
+                default:
+                    window.alert('Algo salio mal');
+                    break;
             }
         }
     }
