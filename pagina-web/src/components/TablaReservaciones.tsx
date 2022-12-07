@@ -20,7 +20,6 @@ export default function TablaReservaciones() {
                 const servicioReservaciones = new ReservacionesService(tokenSesion);
                 const listaRservaciones = await servicioReservaciones.obtenerLista();
                 setReservaciones(listaRservaciones);
-                debugger;
                 setIsLoaded(true);
             } else {
                 navigate('/auth/login');
@@ -52,7 +51,7 @@ export default function TablaReservaciones() {
             <Row>
                 <Col md={{ span: 10, offset: 1 }}>
                 <br></br>
-                <Table bordered hover className='tablaR'>
+                <Table bordered className='tablaR'>
                     <thead>
                         <tr className='Title'>
                             <th>Reservacion</th>

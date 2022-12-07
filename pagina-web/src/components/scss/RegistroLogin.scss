@@ -109,3 +109,16 @@ ul {
     list-style: none;
     padding: 0;
 }
+.inputLink{
+    width: 30%;
+    outline: none;
+    border: solid transparent;
+    background-color: #652ec7;
+    padding: 1em;
+    font: inherit;
+    border-radius: .6em;
+}
+.inputLink:hover{
+    background-color: #c501e2;
+    border: solid transparent;
+}

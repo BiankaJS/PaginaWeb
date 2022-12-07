@@ -1,6 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { Button, Container, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import LoginUsuarioTask from '../tasks/LoginUsuarioTask';
 import './scss/RegistroLogin.scss';
 
@@ -33,7 +34,21 @@ export default function FormularioLogin() {
             await loginUsuarioTask.execute();
             navigate('/');
         } catch (e) {
-            console.log(e);
+            switch(e)
+            {
+                case 'ErrorFaltanDatos':
+                    toast(
+                        'Olvidaste datos.',
+                        { type: 'info' }
+                    );
+                    break;
+                case 'ErrorUsuarioNoEncontrado':
+                    toast(
+                        'No te encuentras registrado',
+                        { type: 'warning'}
+                    );
+                    break;
+            }
         }
     }
 

@@ -8,8 +8,9 @@ import Reservacion from './components/routes/Reservacion';
 import Usuario from './components/routes/Usuario';
 import FormularioRegistro from './components/FormularioRegistro';
 import FormularioLogin from './components/FormularioLogin';
-import DetalleLugar from './components/ActualizarReservacion';
 import TablaReservaciones from './components/TablaReservaciones';
+import FormularioActualizarLugar from './components/FormularioActualizarLugar';
+import DetalleLugar from './components/routes/DetalleLugar';
 
 const router = createBrowserRouter([
   {

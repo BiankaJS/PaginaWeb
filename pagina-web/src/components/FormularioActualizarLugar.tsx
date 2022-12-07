@@ -3,6 +3,7 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import Lugar from "../models/Lugar";
 import { useNavigate } from 'react-router-dom';
 import ActualizarLugarTask from "../tasks/ActualizarLugarTask";
+import './scss/reservacion.scss';
 
 
 interface FormularioActualizarLugarProps {
@@ -65,16 +66,12 @@ export default function FormularioActualizarLugar({ lugar }: FormularioActualiza
     return (
         <>
             <h1 className="titulo"><span>Modificar lugar</span></h1>
-            <div className="animated bounceInUp">
-                <div className="contact-form">
-                    <Form >
+            <div className="dialog-wrapper animated bounceInUp">
+                <div className="dialog-form">
+                    <Form>
                         <Form.Group className="orilla">
                             <Form.Label htmlFor="txtName">Nombre del Lugar: </Form.Label>
                             <Form.Control size="sm" type="text" name="nombre" id="txtName" value={nombre} onChange={handleFormControlChange} required />
-                        </Form.Group>
-                        <Form.Group className="orilla">
-                            <Form.Label htmlFor="txtEmail">Descripcion: </Form.Label>
-                            <Form.Control size="sm" type="text" name="descripcion" id="txtEmail" value={descripcion} onChange={handleFormControlChange} required />
                         </Form.Group>
                         <Form.Group className="orilla">
                             <Form.Label htmlFor="txtEvento">Dirección: </Form.Label>
@@ -83,6 +80,10 @@ export default function FormularioActualizarLugar({ lugar }: FormularioActualiza
                         <Form.Group className="orilla">
                             <Form.Label htmlFor="txtTelefono">Telefono: </Form.Label>
                             <Form.Control size="sm" type="phone" name="telefono" id="txtTelefono" value={telefono} onChange={handleFormControlChange} placeholder="000 000 00 00" required />
+                        </Form.Group>
+                        <Form.Group className="orilla">
+                            <Form.Label htmlFor="txtEmail">Descripcion: </Form.Label>
+                            <Form.Control size="sm" as="textarea" type="text" rows={3} name="descripcion" id="txtMensaje" value={descripcion} onChange={handleFormControlChange} required/>
                         </Form.Group>
                         <p>
                             <Button onClick={handleFormActualizar} variant="primary" type="submit">

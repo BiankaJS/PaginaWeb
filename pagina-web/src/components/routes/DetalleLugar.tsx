@@ -1,12 +1,14 @@
 import FormularioActualizarLugar from "../FormularioActualizarLugar";
 import { useParams, useNavigate, Link } from 'react-router-dom';
-
 import { useState, useEffect } from 'react';
-import { Row, Col, Card } from 'react-bootstrap';
+import { Row, Col, Container, Button } from 'react-bootstrap';
 import Lugar from "../../models/Lugar";
+import '../scss/RegistroLogin.scss';
 import LugaresService from "../../services/LugaresService";
 import { toast } from "react-toastify";
 import CardsLugares from "../CardsLugares";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowAltCircleLeft } from "@fortawesome/free-regular-svg-icons";
 
 export default function DetalleLugar() {
     const { idLugar } = useParams();
@@ -60,12 +62,15 @@ export default function DetalleLugar() {
 
     return (
         <>
+        <Container>
             <Row>
-                <Col md={{ span: 6, offset: 3 }}>
-                    <Link to="/lugares">&lt; Regresar</Link>
+            <Button variant="primary" href="/lugares" className="inputLink"><FontAwesomeIcon icon={faArrowAltCircleLeft}/> Regresar</Button>
+                <Col md={{ span: 10, offset: 1 }}>
+                    <br></br>
                     <FormularioActualizarLugar lugar={lugar} />
                 </Col>
             </Row>
+        </Container>
         </>
     );
 }

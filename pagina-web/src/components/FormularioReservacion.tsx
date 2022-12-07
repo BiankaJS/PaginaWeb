@@ -31,9 +31,7 @@ export default function FormularioReservacion() {
         setLugares(listaLugares)
     }
 
-    function handleFormControlChange(
-        event: ChangeEvent<HTMLInputElement>
-    ) {
+    function handleFormControlChange(event: ChangeEvent<HTMLInputElement>) {
         const valor = event.target.value;
 
         switch (event.target.name) {
@@ -68,6 +66,10 @@ export default function FormularioReservacion() {
                 setLugarId(parseInt(valor));
                 break;
         }
+    }
+
+    function handleSelectControlChange(event: ChangeEvent<HTMLSelectElement>){
+
     }
 
     async function handleFormSubmit(event: FormEvent) {
@@ -149,7 +151,7 @@ export default function FormularioReservacion() {
                             </Form.Group>
                             <Form.Group className="orilla">
                                 <Form.Label htmlFor="txtLugar">Lugar</Form.Label>
-                                <Form.Select name="lugarId" id="txtLugar" required>
+                                <Form.Select name="lugarId" id="txtLugar" required onChange={handleSelectControlChange}>
                                     <option value='Sel. una opción' disabled>Sel. una opción</option>
                                     {
                                         lugares.map(lugar => (

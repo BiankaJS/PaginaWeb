@@ -5,7 +5,7 @@ import { Row, Col, Card } from 'react-bootstrap';
 import Lugar from '../models/Lugar';
 import LugaresService from '../services/LugaresService';
 
-export default function DetalleLugar() {
+export default function ActualizarReservacion() {
     const { idLugar } = useParams();
     const navigate = useNavigate();
     const [isLoaded, setIsLoaded] = useState(false);

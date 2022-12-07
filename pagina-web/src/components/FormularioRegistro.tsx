@@ -1,4 +1,4 @@
-import { Form, Button, Col, Row, Toast} from 'react-bootstrap';
+import { Form, Button, Col, Row} from 'react-bootstrap';
 import './scss/RegistroUsuario.scss';
 import facebook from '../img/facebook.svg';
 import apple from '../img/apple.svg';
@@ -6,7 +6,6 @@ import google from '../img/google-icon.svg';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import RegistroUsuarioTask from '../tasks/RegistrarUsuarioTask';
-import { Axios } from 'axios';
 import { toast } from 'react-toastify';
 
 export default function FormularioRegistro() {

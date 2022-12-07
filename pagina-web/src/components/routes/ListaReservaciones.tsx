@@ -5,7 +5,7 @@ import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import './scss/ListaReservacion.scss';
 import TablaReservaciones from '../TablaReservaciones';
 
-export default function ListaAutos() {
+export default function ListaReservacion() {
     const navigate = useNavigate();
 
     function navegarARegistroReservacion() {

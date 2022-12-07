@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import Reservacion from '../models/Reservacion';
 import './scss/RenglonTablaReservaciones.scss'
 
@@ -9,15 +8,9 @@ interface RenglonTablaReservacionProps {
 export default function RenglonTablaReservaciones(
     { reservacion }: RenglonTablaReservacionProps
 ) {
-    const navigate = useNavigate();
-
-    function navegarADetalleReservacion() {
-        navigate(`/reservaciones/${reservacion.id}`);
-    }
-
     return (
         <>
-            <tr className="renglon-tabla-reservaciones" onClick={navegarADetalleReservacion}>
+            <tr>
                 <td>{reservacion.nombreCompleto}</td>
                 <td>{reservacion.telefono}</td>
                 <td>{reservacion.numPersonas}</td>
