@@ -10,7 +10,7 @@ interface registrarReservacion {
     telefono: string;
     evento:string;
     numPersonas: number;
-    fechaEvento: Date;
+    fechaEvento: string;
     horaEvento: string;
     lugarId: number;
     mensaje: string;
@@ -29,7 +29,6 @@ export default class ReservacionController{
 
     protected initializeRouter(): void
     {
-
         this.router.post('/', this.nuevaReservacion);
         this.router.get('/', this.consultaReservacion);
     }
@@ -57,7 +56,7 @@ export default class ReservacionController{
             const{nombreCompleto, correo, telefono, evento, numPersonas, fechaEvento, horaEvento, lugarId, mensaje} = <registrarReservacion> req.body;
 
             if(!nombreCompleto || !correo || !telefono || !evento || !numPersonas 
-                || !fechaEvento || !horaEvento || !lugarId ||!mensaje)
+                || !fechaEvento || !horaEvento || !lugarId)
             {
                 res.status(HttpStatusCodes.BAD_REQUEST).json({message: "Faltan datos"});
                 return;

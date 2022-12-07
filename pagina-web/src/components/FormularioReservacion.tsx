@@ -1,8 +1,6 @@
 import { Button, Form } from "react-bootstrap";
-import './scss/style.scss';
 import './scss/reservacion.scss';
 import { ChangeEvent, FormEvent, useState, useEffect} from 'react';
-import Reservacion from "../models/Reservacion";
 import RegistrarReservacionTask from "../tasks/RegistrarReservacionTask";
 import { useNavigate } from 'react-router-dom';
 import Lugar from "../models/Lugar";
@@ -20,7 +18,7 @@ export default function FormularioReservacion() {
     const [numPersonas, setNumPersonas] = useState(0);
     const [fechaEvento, setFechaEvento] = useState('');
     const [horaEvento, setHoraEvento] = useState('');
-    const [lugar, setLugar] = useState(0);
+    const [lugarId, setLugarId] = useState(1);
     const [mensaje, setMensaje] = useState('');
 
     const navigate = useNavigate();
@@ -63,21 +61,20 @@ export default function FormularioReservacion() {
             case 'horaEvento':
                 setHoraEvento(valor);
                 break;
-            case 'lugar':
-                setLugar(parseInt(valor));
-                break;
             case 'mensaje':
                 setMensaje(valor);
                 break;
-
+            case 'lugarId':
+                setLugarId(parseInt(valor));
+                break;
         }
     }
 
     async function handleFormSubmit(event: FormEvent) {
         event.preventDefault();
         try {
-            const reservacionPorRegistrar = new Reservacion(
-                undefined,
+
+            const registrarReservacionTask = new RegistrarReservacionTask({
                 nombreCompleto,
                 telefono,
                 numPersonas,
@@ -86,25 +83,14 @@ export default function FormularioReservacion() {
                 correo,
                 evento,  
                 fechaEvento,
-                lugar
-            );
-            console.log(reservacionPorRegistrar);
-
-            const registrarReservacionTask = new RegistrarReservacionTask(
-                reservacionPorRegistrar
+                lugarId
+            }
             );
 
             await registrarReservacionTask.execute();
-
             navigate('/reservacion');
         } catch (e) {
-            const mensajeError = (e as Error).message;
-
-            switch (mensajeError) {
-                case 'ErrorSesionExpiradaOInvalida':
-                    localStorage.removeItem('tokenSesion');
-                    navigate('/inicioSesion');
-                    break;
+            switch ((e as Error).message) {
                 case 'ErrorFormularioIncompleto':
                     window.alert(
                         'Olvidaste llenar todos los campos del formulario'
@@ -166,7 +152,7 @@ export default function FormularioReservacion() {
                             </Form.Group>
                             <Form.Group className="orilla">
                                 <Form.Label htmlFor="txtLugar">Lugar</Form.Label>
-                                <Form.Select id="txtLugar" required>
+                                <Form.Select name="lugarId" id="txtLugar" required>
                                     <option value='Sel. una opción' disabled>Sel. una opción</option>
                                     {
                                         lugares.map(lugar => (
@@ -185,7 +171,7 @@ export default function FormularioReservacion() {
                         </Form>
                     </div>
                     <div className="contact-info">
-                        <h4>Informacion de Contacto</h4>
+                    <h4>Informacion de Contacto</h4>
                         <ul>
                             <li><i className="fas fa-phone"></i> (462)2179231<br />Alberto Jaramillo<br />(Gerente General)<br /></li>
                             <br />

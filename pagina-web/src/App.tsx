@@ -9,6 +9,9 @@ import Usuario from './components/routes/Usuario';
 import FormularioRegistro from './components/FormularioRegistro';
 import FormularioLogin from './components/FormularioLogin';
 import Favoritos from './components/Favoritos';
+import FormularioActualizarLugar from './components/FormularioActualizarLugar';
+import DetalleLugar from './components/ActualizarReservacion';
+import TablaReservaciones from './components/TablaReservaciones';
 
 const router = createBrowserRouter([
   {
@@ -34,6 +37,10 @@ const router = createBrowserRouter([
         path: '/lugares',
         index: true,
         element: <CardsLugares/>
+      },
+      {
+        path: '/lugares/:idLugar',
+        element: <DetalleLugar/>
       }
     ]
   },
@@ -45,6 +52,10 @@ const router = createBrowserRouter([
         path: '/reservacion',
         index: true,
         element: <FormularioReservacion/>
+      },
+      {
+        path: '/reservacion/listaReservaciones',
+        element: <TablaReservaciones/>
       }
     ]
   },

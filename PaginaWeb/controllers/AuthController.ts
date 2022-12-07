@@ -18,7 +18,7 @@ interface RegistroRequestBody{
 
 interface LoginRequestBody
 {
-    username: string;
+    usuario: string;
     password: string;
 }
 
@@ -63,26 +63,26 @@ export default class AuthController{
     private async login(req: Request, res: Response): Promise<void>
     {
         try {
-            const{username, password} = <LoginRequestBody> req.body;
-            if(!username || !password){
+            const{usuario, password} = <LoginRequestBody> req.body;
+            if(!usuario || !password){
                 res.status(HttpStatusCodes.BAD_REQUEST).end();
                 return;
             }
         const repositorioUsuario = await DatabaseConnection.getRepository(Usuario);
         
 
-        const usuario =  await repositorioUsuario.findOneBy({
-         usuario: username,
+        const user =  await repositorioUsuario.findOneBy({
+         usuario: usuario,
          password: password   
         });
 
         
 
-        if(!usuario){
+        if(!user){
             res.status(401).end();
         } 
         else{
-            const sesion = Sesion.crearParaUsuario(usuario);
+            const sesion = Sesion.crearParaUsuario(user);
             res.status(200).json(sesion);
         }
         } catch (error) {

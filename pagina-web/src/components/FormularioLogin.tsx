@@ -33,7 +33,7 @@ export default function FormularioLogin() {
             await loginUsuarioTask.execute();
             navigate('/');
         } catch (e) {
-            
+            console.log(e);
         }
     }
 
@@ -63,11 +63,9 @@ export default function FormularioLogin() {
                             <h2 className='title'>REGISTRATE</h2>
                             <p className='paragraph'>
                                 Registrate y dsifruta de todas las ventajas de tener una cuenta:
-                                <ul>
-                                    <li>Últimas noticias y ofertas exclusivas</li>
-                                    <li>Realizar reservaciones en los diferentes lugares</li>
-                                    <li>Guardar lugares en favoritos</li>
-                                </ul>
+                                Últimas noticias y ofertas exclusivas
+                                Realizar reservaciones en los diferentes lugares
+                                Guardar lugares en favoritos
                             </p>
                             <Button className='btnSubmit' href='/auth/'>Registrarme</Button>
                             <Button className='btnSubmit' href='/Reservacion'>Reservar lugar</Button>

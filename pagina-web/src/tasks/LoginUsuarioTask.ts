@@ -1,34 +1,35 @@
 import AuthenticationService from "../services/AuthenticationService";
+import jwt_decode from "jwt-decode";
 
-interface DtoLoginUsuario {
+interface LoginUsuario{
     usuario: string;
     password: string;
 }
 
-export default class LoginUsuarioTask {
-    private _dtoLoginUsuario: DtoLoginUsuario;
+export default class LoginUsuarioTask{
+    private _dtoLoginUsuario: LoginUsuario;
 
-    public constructor (_dtoLoginUsuario: DtoLoginUsuario)
+    public constructor(_dtoLoginUsuario: LoginUsuario)
     {
         this._dtoLoginUsuario = _dtoLoginUsuario;
     }
 
-    public async execute(): Promise<void> {
-        this.validarDtoFormulario();
-        const tokenSession = await this.loginUsuario();
-        localStorage.setItem('tokenSession', tokenSession);
+    public async execute(): Promise<void>{
+        this.validarDatos();
+        const tokenSesion = await this.loginUsuario();
+        localStorage.setItem('tokenSession', tokenSesion);
     }
 
-    private validarDtoFormulario(): void {
+    private validarDatos(): void {
         const { usuario, password } = this._dtoLoginUsuario;
-        if(!usuario || !password) throw new Error('ErrorFormularioIncompleto')
+        console.log(usuario, password);
+        if(!usuario || !password) throw new Error('ErrorFaltanDatos');
     }
 
-    private async loginUsuario(): Promise<string> {
+    private async loginUsuario(): Promise<string>
+    {
         const servicioAuthentication = new AuthenticationService();
-        const { usuario, password } = this._dtoLoginUsuario;
-        return servicioAuthentication.loginUsuario( {
-            usuario, password
-        });
+        const { usuario, password} = this._dtoLoginUsuario;
+        return servicioAuthentication.loginUsuario({usuario, password});
     }
 }

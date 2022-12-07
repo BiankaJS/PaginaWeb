@@ -12,23 +12,12 @@ interface LugarBackend{
 
 export default class LugaresService{
     private baseUrl: string;
-    private tokenSesion: string;
 
     public constructor()
     {
         this.baseUrl = 'http://localhost:3001/lugares';
-        const tokenSesion = localStorage.getItem('tokenSesion');
-        if (!tokenSesion) {
-            throw new Error('ErrorSesionExpiradaOInvalida');
-        }
-        this.tokenSesion = tokenSesion;
     }
 
-    private get headers() {
-        return {
-            'Token-Sesion': this.tokenSesion
-        };
-    }
 
     public async obtenerLugares(): Promise<Lugar[]> {
         try {
@@ -56,8 +45,7 @@ export default class LugaresService{
         try {
             const respuesta = await axios.post(
                 this.baseUrl,
-                lugar,
-                { headers: this.headers }
+                lugar
             );
             const {
                 nombre,
@@ -87,8 +75,7 @@ export default class LugaresService{
     public async obtenerPorId(id: number): Promise<Lugar> {
         try {
             const respuesta = await axios.get(
-                `${this.baseUrl}/${id}`,
-                { headers: this.headers }
+                `${this.baseUrl}/${id}`
             );
     
             const {
@@ -127,8 +114,7 @@ export default class LugaresService{
         try {
             await axios.put(
                 `${this.baseUrl}/${lugar.id}`,
-                lugar,
-                { headers: this.headers }
+                lugar
             );
         } catch (e) {
             if (e instanceof AxiosError && e.response) {
@@ -149,8 +135,7 @@ export default class LugaresService{
     public async eliminarLugar(id: number): Promise<void> {
         try {
             const respuesta = await axios.delete(
-                `${this.baseUrl}/${id}`,
-                { headers: this.headers }
+                `${this.baseUrl}/${id}`
             );
         } catch (e) {
             throw e;

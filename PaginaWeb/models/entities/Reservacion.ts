@@ -22,8 +22,8 @@ export default class Reservacion
     @Column({ type: "int"})
     public numPersonas: number;
 
-    @Column({ type: 'date', nullable: false })
-    public fechaEvento: Date;
+    @Column({ type: 'varchar', nullable: false })
+    public fechaEvento: string;
 
     @Column({ type: 'time', nullable: false })
     public horaEvento: string;

@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 
 interface RegistroDto{
     rolMaster: boolean,
@@ -18,6 +18,7 @@ interface LoginDto{
 }
 
 export default class AuthenticationService {
+
     private baseUrl: string;
 
     public constructor()
@@ -55,7 +56,7 @@ export default class AuthenticationService {
             const respuesta = await axios.post(
                 `${this.baseUrl}/login`, dto
             );
-            return respuesta.data.tokenSession as string
+            return respuesta.data.tokenSesion as string;
         }
         catch(e)
         {

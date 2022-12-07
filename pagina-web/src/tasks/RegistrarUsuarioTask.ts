@@ -23,6 +23,7 @@ export default class RegistroUsuarioTask {
         this.validarDtoFormulario();
         //llamar el servicio para registrar el usuario
         const tokenSession = await this.registrarUsuario();
+        console.log(tokenSession);
         //guardar el token en el almacenamiento local del navegador
         localStorage.setItem('tokenSession', tokenSession);
     }

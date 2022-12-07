@@ -1,77 +1,55 @@
 import axios, { AxiosError } from "axios";
-import Lugar from "../models/Lugar";
 import Reservacion from "../models/Reservacion";
 
 interface ReservacionBackend {
-    id: number;
-    nombreReservacion: string;
+    nombreCompleto: string; 
+    correo:string;
     telefono: string;
-    numeroPersonas: number;
-    horaInicio: string;
-    mensaje: string;
-    correoElectronico: string;
-    evento: string;
+    evento:string;
+    numPersonas: number;
     fechaEvento: string;
-    lugar: number;
-    fechaCreacion: string;
-    fechaActualizacion: string;
+    horaEvento: string;
+    lugarId: number;
+    mensaje: string;
+}
 
+interface ReservacionBackendDto {
+    id: number;
+    nombreCompleto: string; 
+    correo:string;
+    telefono: string;
+    evento:string;
+    numPersonas: number;
+    fechaEvento: Date;
+    horaEvento: string;
+    lugarId: number;
+    mensaje: string;
+    fechaCreacion: Date;
+    fechaActualizacion: Date;
 }
 
 export default class ReservacionesService {
     private baseUrl: string;
-
     private tokenSesion: string;
 
     public constructor(tokenSesion: string) {
         this.tokenSesion = tokenSesion;
-        this.baseUrl = 'http://localhost:3001/lugares'
+        this.baseUrl = 'http://localhost:3001/reservacion'
     }
 
     private get headers() {
         return {
-            'Token-Sesion': this.tokenSesion
+            'tokenSession': this.tokenSesion
         };
     }
 
     //Registrar Reservaciones
-    public async registrar(reservacion: Reservacion): Promise<Reservacion> {
+    public async registrar(reservacion: ReservacionBackend): Promise<void> {
         try {
             const respuesta = await axios.post(
-                this.baseUrl,
-                reservacion,
-                { headers: this.headers }
+                `${this.baseUrl}/`,
+                reservacion
             );
-            const {
-                id,
-                nombreReservacion,
-                telefono,
-                numeroPersonas,
-                horaInicio,
-                mensaje,
-                correoElectronico,
-                evento,
-                fechaEvento,
-                lugar,
-                fechaCreacion,
-                fechaActualizacion
-            } = respuesta.data as ReservacionBackend;
-
-            return new Reservacion(
-                id,
-                nombreReservacion,
-                telefono,
-                numeroPersonas,
-                horaInicio,
-                mensaje,
-                correoElectronico,
-                evento, 
-                //Aqui no se si poner new Date porque cargaria la que esta de cuando se creo 
-                fechaEvento,
-                lugar,
-                new Date(fechaCreacion),
-                new Date(fechaActualizacion)
-            )
         } catch (e) {
             if (e instanceof AxiosError && e.response) {
                 switch (e.response.status) {
@@ -79,12 +57,51 @@ export default class ReservacionesService {
                         throw new Error('ErrorFormularioIncompleto');
                     case 401: // Unauthorized
                         throw new Error('ErrorSesionExpiradaOInvalida');
-                    case 404: // Servidor no encuentra el lugar
-                        throw new Error('ErrorLugarNoEncontrado');
                     default:
                         throw e;
                 }
             }
+            throw e;
+        }
+    }
+
+    public async obtenerLista(): Promise<Reservacion[]> {
+        try {
+            const respuesta = await axios.get(
+                this.baseUrl,
+                { headers: this.headers }
+            );
+
+            const listaReservaciones = respuesta.data.map(
+                (reservacion: ReservacionBackendDto) => (
+                    new Reservacion(
+                        reservacion.id,
+                        reservacion.nombreCompleto,
+                        reservacion.telefono,
+                        reservacion.numPersonas,
+                        reservacion.horaEvento,
+                        reservacion.mensaje,
+                        reservacion.correo,
+                        reservacion.evento,
+                        new Date(reservacion.fechaEvento),
+                        reservacion.lugarId,
+                        new Date(reservacion.fechaCreacion),
+                        new Date(reservacion.fechaActualizacion)
+                    )
+                )
+            );
+
+            return listaReservaciones;
+        } catch (e) {
+            if (e instanceof AxiosError && e.response) {
+                switch (e.response.status) {
+                    case 401:
+                        throw new Error('ErrorSesionExpiradaOInvalida');
+                    default:
+                        throw e;
+                }
+            }
+
             throw e;
         }
     }
