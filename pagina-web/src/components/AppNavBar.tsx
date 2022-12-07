@@ -6,6 +6,9 @@ import './scss/style.scss';
 import { Link } from "react-router-dom";
 
 export default function AppNavBar() {
+
+    const tokenSesion = localStorage.getItem('tokenSession');
+
     return (
         <>
             <Navbar variant="dark">
@@ -28,7 +31,7 @@ export default function AppNavBar() {
                     </Nav>
                     <Nav className="iconos">
                         <Nav.Item>
-                            <Nav.Link className="nav-link">
+                            <Nav.Link className="nav-link" as={Link} to='/reservacion/listaReservaciones'>
                                 <img src={Corazon}></img>
                             </Nav.Link>
                         </Nav.Item>

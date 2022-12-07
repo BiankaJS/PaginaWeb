@@ -26,9 +26,8 @@ export default function RenglonTablaReservaciones(
                 <td>{reservacion.correo}</td>
                 <td>{reservacion.evento}</td>
                 <td>{reservacion.fechaEvento.toDateString()}</td>
-                <td>{reservacion.lugarId}</td>
-                <td>{reservacion.fechaCreacion? reservacion.fechaCreacion.toDateString() : ''}</td>
-                <td>{reservacion.fechaActualizacion? reservacion.fechaActualizacion.toDateString(): ''}</td>
+                <td>{reservacion.lugarNombre}</td>
+                <td>{reservacion.fechaCreacion.toDateString()}</td>
             </tr>
         </>
     );

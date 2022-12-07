@@ -56,7 +56,6 @@ export default class RegistrarReservacionTask {
             fechaEvento,
             lugarId } = this.reservacion;
         const servicioReservacion = new ReservacionesService(tokenSesion);
-        debugger;
         servicioReservacion.registrar({nombreCompleto, correo, telefono, evento, numPersonas, fechaEvento, horaEvento, lugarId, mensaje});
     }
 }

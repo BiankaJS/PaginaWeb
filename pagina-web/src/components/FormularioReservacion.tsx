@@ -83,12 +83,9 @@ export default function FormularioReservacion() {
                 correo,
                 evento,  
                 fechaEvento,
-                lugarId
-            }
-            );
-
+                lugarId });
             await registrarReservacionTask.execute();
-            navigate('/reservacion');
+            navigate('/index');
         } catch (e) {
             switch ((e as Error).message) {
                 case 'ErrorFormularioIncompleto':

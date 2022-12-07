@@ -8,6 +8,7 @@ export default class Reservacion{
     public fechaEvento: Date;
     public horaEvento: string;
     public lugarId: number;
+    public lugarNombre: string;
     public mensaje: string;
     public fechaCreacion: Date;
     public fechaActualizacion: Date;
@@ -23,6 +24,7 @@ export default class Reservacion{
         evento: string,
         fechaEvento: Date,
         lugarId: number,
+        lugarNombre: string,
         fechaCreacion?: Date,
         fechaActualizacion?: Date
     ){
@@ -36,6 +38,7 @@ export default class Reservacion{
         this.evento = evento;
         this.fechaEvento = fechaEvento;
         this.lugarId = lugarId;
+        this.lugarNombre = lugarNombre;
         this.fechaCreacion = fechaCreacion as Date;
         this.fechaActualizacion = fechaActualizacion as Date;
     }

@@ -33,6 +33,12 @@ export default class Reservacion
 
     @Column({ type: "varchar", nullable: true})
     public mensaje: string;
+
+    @Column({type: 'date', nullable: false})
+    public fechaCreacion: Date;
+
+    @Column({ type: 'varchar', nullable: false})
+    public lugarNombre: string;
     
     @Column({ type: 'int', nullable: false })
     public codigoEstado: boolean;

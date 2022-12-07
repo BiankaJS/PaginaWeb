@@ -14,7 +14,7 @@ interface ReservacionBackend {
 }
 
 interface ReservacionBackendDto {
-    id: number;
+    Id: number;
     nombreCompleto: string; 
     correo:string;
     telefono: string;
@@ -23,6 +23,7 @@ interface ReservacionBackendDto {
     fechaEvento: Date;
     horaEvento: string;
     lugarId: number;
+    lugarNombre: string;
     mensaje: string;
     fechaCreacion: Date;
     fechaActualizacion: Date;
@@ -71,11 +72,10 @@ export default class ReservacionesService {
                 this.baseUrl,
                 { headers: this.headers }
             );
-
             const listaReservaciones = respuesta.data.map(
                 (reservacion: ReservacionBackendDto) => (
                     new Reservacion(
-                        reservacion.id,
+                        reservacion.Id,
                         reservacion.nombreCompleto,
                         reservacion.telefono,
                         reservacion.numPersonas,
@@ -85,12 +85,12 @@ export default class ReservacionesService {
                         reservacion.evento,
                         new Date(reservacion.fechaEvento),
                         reservacion.lugarId,
-                        new Date(reservacion.fechaCreacion),
-                        new Date(reservacion.fechaActualizacion)
+                        reservacion.lugarNombre,
+                        new Date(reservacion.fechaCreacion)
                     )
+
                 )
             );
-
             return listaReservaciones;
         } catch (e) {
             if (e instanceof AxiosError && e.response) {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Table } from 'react-bootstrap';
+import { Row, Col, Table } from 'react-bootstrap';
 import Reservacion from '../models/Reservacion';
 import RenglonTablaReservaciones from './RenglonTablaReservaciones';
 import ReservacionesService from '../services/ReservacionesService';
@@ -20,9 +20,10 @@ export default function TablaReservaciones() {
                 const servicioReservaciones = new ReservacionesService(tokenSesion);
                 const listaRservaciones = await servicioReservaciones.obtenerLista();
                 setReservaciones(listaRservaciones);
+                debugger;
                 setIsLoaded(true);
             } else {
-                navigate('')
+                navigate('/auth/login');
             }
             
         } catch (e) {
@@ -48,26 +49,37 @@ export default function TablaReservaciones() {
 
     return (
         <>
-            <Table bordered hover>
-                <thead>
-                    <tr>
-                        <th>Modelo</th>
-                        <th>Marca</th>
-                        <th>Submarca</th>
-                        <th>Fecha Actualizacion</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        reservaciones.map(reservacion => (
-                            <RenglonTablaReservaciones
-                                key={reservacion.id}
-                                reservacion={reservacion}
-                            />
-                        ))
-                    }
-                </tbody>
-            </Table>
+            <Row>
+                <Col md={{ span: 10, offset: 1 }}>
+                <br></br>
+                <Table bordered hover className='tablaR'>
+                    <thead>
+                        <tr className='Title'>
+                            <th>Reservacion</th>
+                            <th>Telefono</th>
+                            <th>No.Personas</th>
+                            <th>Hora del evento</th>
+                            <th>Mensaje</th>
+                            <th>Correo Electronico</th>
+                            <th>Tipo de evento</th>
+                            <th>Fecha del Evento</th>
+                            <th>Lugar Seleccionado</th>
+                            <th>Fecha de Reservación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            reservaciones.map(reservacion => (
+                                <RenglonTablaReservaciones
+                                    key={reservacion.id}
+                                    reservacion={reservacion}
+                                />
+                            ))
+                        }
+                    </tbody>
+                </Table>
+                </Col>
+            </Row>
         </>
     );
 }

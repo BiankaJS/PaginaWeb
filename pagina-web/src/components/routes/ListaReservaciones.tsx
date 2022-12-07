@@ -2,27 +2,23 @@ import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
-import './scss/ListaAutos.scss';
+import './scss/ListaReservacion.scss';
 import TablaReservaciones from '../TablaReservaciones';
 
 export default function ListaAutos() {
     const navigate = useNavigate();
 
-    function navegarARegistroAutos() {
-        navigate('/auth/favorite');
+    function navegarARegistroReservacion() {
+        navigate('/reservacion');
     }
 
     return (
         <>
-            <div className="lista-autos">
+            <div className="lista-reservacion">
                 <div className="encabezado">
-                    <h3>Reservaciones Hechas</h3>
-                    <Button
-                        variant="primary"
-                        onClick={navegarARegistroAutos}
-                    >
-                        <FontAwesomeIcon icon={faPlusCircle} />&nbsp;
-                        Registrar Auto
+                    <h3>Lista de Reservaciones</h3>
+                    <Button variant="primary" onClick={navegarARegistroReservacion}>
+                    <FontAwesomeIcon icon={faPlusCircle} />&nbsp;
                     </Button>
                 </div>
                 <TablaReservaciones/>

@@ -54,8 +54,7 @@ export default function DetalleLugar() {
     return (
         <>
             <Row>
-                <Col md={{ span: 6, offset: 3 }}>
-                    <h3>Registrar Auto</h3>
+                <Col md={{ span: 8, offset: 2 }}>
                     <Link to="/lugares">&lt; Regresar</Link>
                     <Card>
                         <Card.Body>
