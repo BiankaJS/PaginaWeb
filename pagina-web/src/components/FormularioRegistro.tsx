@@ -135,7 +135,7 @@ export default function FormularioRegistro() {
                             <Form.Control type='date' placeholder='Fecha de nacimiento' name='txtFechaNacimiento' className='main__input1' value={fechaN} onChange={handleFormControlChange} required/>
                         </Form.Group>
                         <Form.Group>
-                            <Form.Control type='email' placeholder='Correo electronica' name='txtCorreo' className='main__input1' value={correo} onChange={handleFormControlChange} required/>
+                            <Form.Control type='email' placeholder='Correo electronico' name='txtCorreo' className='main__input1' value={correo} onChange={handleFormControlChange} required/>
                         </Form.Group>
                         <Form.Group>
                             <Form.Control type='text' placeholder='Usuario' name='txtUsuario' className='main__input1' value={usuario} onChange={handleFormControlChange} required/>
@@ -147,7 +147,7 @@ export default function FormularioRegistro() {
                             <Form.Control type='password' placeholder='Confirmar contraseña' name='txtVerifyPassword' className='main__input1' value={verifyPassword} onChange={handleFormControlChange} required/>
                         </Form.Group>
                         <Form.Group>
-                            <Form.Control type='phone' placeholder='Telefono' name='txtPhone' className='main__input1' value={telefono} onChange={handleFormControlChange} required/>
+                            <Form.Control type='number' placeholder='Telefono' name='txtPhone' className='main__input1' value={telefono} onChange={handleFormControlChange} required/>
                         </Form.Group>
                         <p>
                             <Button type='submit' className='main__input main_input--send'>Registrarme</Button>
